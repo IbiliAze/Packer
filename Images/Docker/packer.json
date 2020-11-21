@@ -1,0 +1,39 @@
+{
+    "variables": {
+        "repository": "la/express",
+        "tag": "0.1.0"
+    },
+    "builders": [
+        {
+            "type": "docker",
+            "author": "ibi",
+            "image": "node",
+            "commit": true,
+            "changes": [
+                "EXPOSE 5000"
+            ]
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "apt update -y && apt install -y wget",
+                "mkdir -p /var/code",
+                "cd /",
+                "wget https://github.com/IbiliAze/NodeJSWeatherAPI/archive/master.zip",
+                "unzip master.zip",
+                "mv NodeJSWeatherAPI-master /var/code/master",
+                "cd /var/code/master",
+                "npm install"
+            ]
+        }
+    ],
+    "post-processors": [
+        {
+            "type": "docker-tag",
+            "repository": "{{user `repository`}}",
+            "tag": "{{user `tag`}}"
+        }
+    ]
+}

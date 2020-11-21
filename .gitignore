@@ -1,0 +1,4 @@
+Images/AMI/Ansible/packer.json
+Images/AMI/Jenkins/packer.json
+Images/AMI/Kubernetes/packerWorker.json
+Images/AMI/Kubernetes/packerMaster.json

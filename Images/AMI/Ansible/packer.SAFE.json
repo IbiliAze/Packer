@@ -1,8 +1,4 @@
 {
-    "variables": {
-        "aws_access_key": "",
-        "aws_secret_key": ""
-    },
     "builders": [
         {
             "type": "amazon-ebs",
@@ -13,7 +9,7 @@
             "ami_name": "packer-base-ami-{{timestamp}}",
             "source_ami_filter": {
                 "filters": {
-                    "virtualization": "hvm",
+                    "virtualization-type": "hvm",
                     "name": "ubuntu/images/*ubuntu-focal-20.04-amd64-server-*",
                     "root-device-type": "ebs"
                 },
@@ -21,6 +17,17 @@
                 "most_recent": true
             },
             "ssh_username": "ubuntu"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "echo '*** This is ran by Packer ***'",
+                "echo '*** Downloading Ansible ***'",
+                "sudo apt update -y && sudo apt upgrade -y",
+                "sudo apt install -y ansible"
+            ]
         }
     ]
 }
